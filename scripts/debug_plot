@@ -1,0 +1,5 @@
+#!/bin/env sh
+
+cat $1 | julia --project=. scripts/prepare_data.jl |\
+     gnuplot -p -e "set datafile separator ',';
+                    plot '<cat' using 1:2 with lines title 'U vs t'"
