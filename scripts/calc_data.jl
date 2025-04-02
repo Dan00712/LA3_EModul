@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate
+
 using ArgParse
 using Printf
 
