@@ -1,6 +1,3 @@
-using DrWatson
-@quickactivate
-
 using ArgParse
 using Printf
 
@@ -8,7 +5,7 @@ using Statistics
 using CSV, DataFrames
 
 const g = 9.81  # N/kg
-const N = 2     # ()
+const N = 1     # ()
 function A(d, D) 
     @assert d <= D
 
@@ -69,7 +66,7 @@ df = CSV.read(let
                   end
               end,
               DataFrame; header=false)
-println(df)
+println(stderr, df)
 
 F = m * g       # N
 σ = F/A(d, D)   # N /mm^2
@@ -77,13 +74,15 @@ F = m * g       # N
 Ujs = df[(df[:,1] .>= start_t) .&& (df[:, 1] .<= stop_t), 2] # [V]
 Uj = mean(Ujs)  # V
 
-ϵ = MBR/1000 * N * Uj/V    # mV/V * () * V/V = () = m/m
-E = σ/ϵ                    # N/mm^2 /()
+ϵ = MBR/1000 * Uj/V    # mV/V * () * V/V = () = m/m
+E = σ/ϵ/1000               # N/mm^2 /() /1000 = GPa
 
-@printf "A:\t%8.4f\tmm^2\n" A(d, D)
-@printf "F:\t%8.4f\tN\n" F
-@printf "σ:\t%8.4f\tN/mm^2\n" σ 
-@printf "ϵ:\t%.3e\tm/m\n" ϵ 
-@printf "E:\t%.3f\tN/mm^2\n" E
+
+@printf "%f\n" E
+@printf stderr "A:\t%8.4f\tmm^2\n" A(d, D)
+@printf stderr "F:\t%8.4f\tN\n" F
+@printf stderr "σ:\t%8.4f\tN/mm^2\n" σ 
+@printf stderr "ϵ:\t%.3e\tm/m\n" ϵ 
+@printf stderr "E:\t%.3f\tGPa\n" E
 
 
