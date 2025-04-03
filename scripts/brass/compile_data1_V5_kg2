@@ -1,0 +1,17 @@
+#!/bin/env sh
+
+dir=data/brass/V5/kg2
+d=3
+D=15.8
+
+V=5
+m=2
+
+(
+    cat $dir/t1.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 7.5 --stopt 15
+    cat $dir/t2.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 5 --stopt 16
+    cat $dir/t3.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 4 --stopt 14
+    cat $dir/t4.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 4 --stopt 15
+    cat $dir/t5.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 4 --stopt 16
+    cat $dir/t6.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 5 --stopt 25
+) | julia --project=. scripts/lines_mean.jl

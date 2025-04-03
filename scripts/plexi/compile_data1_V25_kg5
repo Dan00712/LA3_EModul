@@ -1,0 +1,14 @@
+#!/bin/env sh
+
+dir=data/plexi/V25/kg5
+d=7.7
+D=15.2
+
+V=2.5
+m=5
+
+(
+    cat $dir/t1.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 6 --stopt 14 --MBR=0.1
+    cat $dir/t2.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 5 --stopt 19 --MBR=0.1
+    cat $dir/t3.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 15 --stopt 21 --MBR=0.1
+) | julia --project=. scripts/lines_mean.jl
