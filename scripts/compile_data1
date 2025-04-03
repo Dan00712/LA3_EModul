@@ -1,0 +1,13 @@
+#!/bin/env sh
+
+d=2.2
+D=15
+
+V=2.5
+m=2
+
+(
+    cat data/steel/V25/kg2/t1.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 4.6 --stopt 22.0
+    cat data/steel/V25/kg2/t2.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 4.6 --stopt 22.0
+    cat data/steel/V25/kg2/t3.csv | julia --project=. scripts/prepare_data.jl | julia --project=. scripts/calc_data.jl -d $d -D $D -V $V -m $m --startt 4.6 --stopt 22.0
+) | julia --project=. scripts/lines_mean.jl

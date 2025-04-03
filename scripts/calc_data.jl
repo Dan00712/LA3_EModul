@@ -5,7 +5,7 @@ using Statistics
 using CSV, DataFrames
 
 const g = 9.81  # N/kg
-const N = 1     # ()
+const N = 1/2     # ()
 function A(d, D) 
     @assert d <= D
 
@@ -66,12 +66,14 @@ df = CSV.read(let
                   end
               end,
               DataFrame; header=false)
-println(stderr, df)
 
 F = m * g       # N
 σ = F/A(d, D)   # N /mm^2
 
-Ujs = df[(df[:,1] .>= start_t) .&& (df[:, 1] .<= stop_t), 2] # [V]
+
+Ujs = df[(df[:,1] .>= start_t) .&& 
+         (df[:, 1] .<= stop_t)
+         , 2] # [V]
 Uj = mean(Ujs)  # V
 
 ϵ = MBR/1000 * Uj/V    # mV/V * () * V/V = () = m/m
