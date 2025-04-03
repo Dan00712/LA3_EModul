@@ -5,7 +5,7 @@ using Statistics
 using CSV, DataFrames
 
 const g = 9.81  # N/kg
-const N = 1/2     # ()
+const N = 1/2    # ()
 function A(d, D) 
     @assert d <= D
 
@@ -76,11 +76,12 @@ Ujs = df[(df[:,1] .>= start_t) .&&
          , 2] # [V]
 Uj = mean(Ujs)  # V
 
-ϵ = MBR/1000 * Uj/V    # mV/V * () * V/V = () = m/m
+ϵ = N*MBR/1000 * Uj/V    # mV/V * () * V/V = () = m/m
 E = σ/ϵ/1000               # N/mm^2 /() /1000 = GPa
 
 
 @printf "%f\n" E
+@printf stderr "d̄U%f\n" Uj
 @printf stderr "A:\t%8.4f\tmm^2\n" A(d, D)
 @printf stderr "F:\t%8.4f\tN\n" F
 @printf stderr "σ:\t%8.4f\tN/mm^2\n" σ 
