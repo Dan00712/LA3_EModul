@@ -15,9 +15,9 @@ function do_stuff(df, du_big = [], du_small = []; outfname, column=2, rel_MBR=1)
     γ = M ./ dU
     println(γ)
     γ = mean(γ)
-    p = plot()
-    plot!(p, M, dU)
-    plot!(p, M, M./γ)
+    p = plot(; xlabel="Masse/g", ylabel="Uₛ/V")
+    scatter!(p, M, dU ./2, label="Messpunkte")
+    plot!(p, M, M./γ ./2, label="Ausgleichsgerade")
 
     savefig(p, outfname)
 
@@ -34,7 +34,7 @@ println("2V5:")
 do_stuff(df, 
          [1.8, 1.79],       # big
          [1.61, 1.6],       # small
-         outfname="plots/$(adder)-m1.png",
+         outfname="plots/$(adder)-2V5.png",
          column=2,
          rel_MBR=2
 )
@@ -43,6 +43,6 @@ println("5V:")
 do_stuff(df, 
          [3.44, 3.56],       # big 
          [3.04 ,3.139],      # small
-         outfname="plots/$(adder)-m2.png",
+         outfname="plots/$(adder)-5V.png",
          column=3,
 )

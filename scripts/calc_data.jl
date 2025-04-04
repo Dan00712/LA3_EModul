@@ -6,6 +6,7 @@ using CSV, DataFrames
 
 const g = 9.81  # N/kg
 const N = 1/2    # ()
+const ΔU = .001
 function A(d, D) 
     @assert d <= D
 
@@ -78,6 +79,7 @@ Uj = mean(Ujs)  # V
 
 ϵ = N*MBR/1000 * Uj/V    # mV/V * () * V/V = () = m/m
 E = σ/ϵ/1000               # N/mm^2 /() /1000 = GPa
+ΔE = V*σ*ΔU/(N*MBR/100 * Uj^2)
 
 
 @printf "%f\n" E
@@ -87,5 +89,6 @@ E = σ/ϵ/1000               # N/mm^2 /() /1000 = GPa
 @printf stderr "σ:\t%8.4f\tN/mm^2\n" σ 
 @printf stderr "ϵ:\t%.3e\tm/m\n" ϵ 
 @printf stderr "E:\t%.3f\tGPa\n" E
+@printf stderr "ΔE:\t%.3f\tGPa\n" ΔE
 
 
